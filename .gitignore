@@ -113,3 +113,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# 项目忽略文件
+.idea
+.vscode
+config/*.ini
+config/*.json
+node_modules/
