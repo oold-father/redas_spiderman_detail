@@ -121,3 +121,4 @@ configs/*.ini
 configs/*.json
 node_modules/
 test/
+data/log/*
