@@ -117,6 +117,7 @@ dmypy.json
 # 项目忽略文件
 .idea
 .vscode
-config/*.ini
-config/*.json
+configs/*.ini
+configs/*.json
 node_modules/
+test/

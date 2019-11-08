@@ -1,1 +1,2 @@
-python-kafka
+kafka-python
+happy-python
