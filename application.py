@@ -6,32 +6,21 @@
 # @File    : application
 # @Software: PyCharm
 
-from kafka import KafkaConsumer
-from utils import Consumer
-from time import sleep
+from utils import Consumer,send_data,crawl_url
+import time
 
 
+# init consumer
+consumer = Consumer.get_consumer()
 
-
-# def main():
-#     consumer = KafkaConsumer('yinxin', bootstrap_servers=['192.168.0.6:9092'])
-#     print("lianjiewanc1")
-#     for msg in consumer:
-#         for i in range(3):
-#             print(i)
-#             sleep(1)
-#         print(msg)
 
 def main():
-    consumer = Consumer.get_consumer()
-    if not consumer:
-        for msg in consumer.consumer:
-            for i in range(3):
-                print(i)
-                sleep(1)
-            print(msg)
-
-
+    msg = consumer.get_msg()
+    url = bytes.decode(msg.value)
+    html = crawl_url(url)
+    send_data(url, html)
 
 if __name__ == '__main__':
-    main()
+    while True:
+        main()
+        time.sleep(5)

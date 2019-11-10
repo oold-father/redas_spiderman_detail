@@ -6,7 +6,10 @@
 # @Software: PyCharm
 
 from utils.Consumer import Consumer
+from utils.util import send_data,crawl_url
 
 __all__ = [
-    "Consumer"
+    "Consumer",
+    "send_data",
+    "crawl_url"
 ]

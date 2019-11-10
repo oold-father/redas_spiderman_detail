@@ -2,6 +2,15 @@ const puppeteer = require('puppeteer');
 
 var arguments = process.argv.splice(2);
 
+function message(code, message, data){
+    result = {
+        "code": code,
+        "message": message,
+        "data": data
+    }
+    return result;
+}
+
 function startCrawl(url) {
     (async () => {
         const browser = await puppeteer.launch({
@@ -29,10 +38,10 @@ function startCrawl(url) {
 
         var sendSingle = 1;
         try {
-            console.log("准备爬取链接:", url);
             await page.goto(url);
         } catch (error) {
-            console.log("浏览器访问错误");
+            var msg = message("error", "浏览器访问错误", "")
+            console.log(msg);
             // console.log("\n", error);
             sendSingle = 0;
             browser.close();
@@ -40,6 +49,9 @@ function startCrawl(url) {
 
         if (1 == sendSingle) {
             var result = await page.content();
+//            var resultBase64 = new Buffer.from(result).toString('base64');
+            var msg = message("success", "爬取完成", result)
+            console.log(JSON.stringify(msg));
         }
         browser.close();
     })();
