@@ -25,3 +25,4 @@ HappyConfigParser.load(CONFIG_FILENAME, mq_config)
 
 # 加载log配置
 hlog = HappyLog.get_instance(LOG_CONFIG_FILENAME)
+

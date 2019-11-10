@@ -33,18 +33,15 @@ class Consumer:
             try:
                 Consumer.last_obj = Consumer()
             except BaseException as e:
-                hlog.debug("消息队列初始化连接异常:\n")
-                hlog.debug(e)
+                hlog.debug("消息队列初始化连接异常")
                 Consumer.last_obj = None
             else:
                 hlog.info("消息队列连接完成")
         return Consumer.last_obj
 
     def get_msg(self):
-        if not Consumer.last_obj:
-            hlog.debug("未初始化消息队列连接")
-            return ""
-        return ""
+
+        return next(self.consumer)
 
 
 
