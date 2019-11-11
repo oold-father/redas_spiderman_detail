@@ -1,0 +1,12 @@
+# mq_config(UTF-8)
+[redas_spider_man]
+[mq_config]
+host=localhost
+port=9092
+group=group1
+topic=test1
+
+[api_config]
+host=127.0.0.1
+port=8080
+uri=/mq/addPositionDetailHtml
