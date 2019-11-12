@@ -7,6 +7,7 @@
 # @Software: PyCharm
 
 from utils import Consumer,send_data,crawl_url
+from common import delay
 import time
 
 
@@ -23,4 +24,4 @@ def main():
 if __name__ == '__main__':
     while True:
         main()
-        time.sleep(5)
+        time.sleep(delay)

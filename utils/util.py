@@ -5,21 +5,17 @@
 # @File    : util
 # @Software: PyCharm
 
+import inspect
 import base64
 from common import api_config
 from common import hlog
+from common import PLATFORM_MAP
 import requests
 import uuid
 import re
 import os
 import json
 
-PLATFORM_MAP = {
-    "https://www.zhipin.com": "boss直聘",
-    "https://www.51job.com": "前程无忧",
-    "https://www.lagou.com": "拉勾",
-    "https://www.zhaopin.com": "智联招聘"
-}
 
 def send_data(source_url, htmlString):
     if "" == htmlString:
@@ -31,8 +27,8 @@ def send_data(source_url, htmlString):
 
     data = {
         "url": source_url,
-        "spiderUuid": spider_uuid,
-        "platform": PLATFORM_MAP[re.match("(http|https)://(www.)?(\w+(\.)?)+",source_url).group()],
+        "spiderUuid": str(spider_uuid),
+        "platform": PLATFORM_MAP[get_platfrom(source_url)],
         "htmlString": encodedStr
     }
 
@@ -45,7 +41,7 @@ def send_data(source_url, htmlString):
         api_config.port,
         api_config.uri
     )
-    requests.post(url=url, data= data, headers= headers)
+    requests.post(url=url, data= json.dumps(data), headers= headers)
 
 def crawl_url(url):
 
@@ -56,5 +52,26 @@ def crawl_url(url):
         html = jsonString["data"]
     else:
         hlog.debug("爬虫爬取有误")
+        crawl_url(url)
 
     return html
+
+def get_platfrom(url):
+    """
+    根据url获取网站域名主体
+    :param url: 网址
+    :return:
+    """
+    func_name = inspect.stack()[0][3]
+    hlog.enter_func(func_name)
+    hlog.var("url", url)
+    try:
+        domain = url.split("/")[2]
+        platfrom = domain.split(".")[1]
+        hlog.var("platfrom", platfrom)
+    except:
+        hlog.debug("获取网站域名主体失败")
+
+    hlog.info("获取网站域名主体成功")
+    hlog.exit_func(func_name)
+    return platfrom
